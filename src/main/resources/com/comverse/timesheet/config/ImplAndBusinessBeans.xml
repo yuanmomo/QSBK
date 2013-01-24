@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/net/yuanmomo/backend/qsbk/resource/QSBKserver.properties</value>
+				<value>classpath:/net/yuanmomo/backend/qsbk/resource/download.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="qsbkServer" class="net.yuanmomo.backend.qsbk.bean.QSBKServer">
+		<property name="homeURL" value="${HOME_URL}" />
+		<property name="loginURL" value="${LOGIN_URL}" />
+		<property name="serverPort" value="${SERVER_PORT}" />
+		<property name="hot8Hours" value="${HOT_8_HOURS_URL}" />
+		<property name="hot24Hours" value="${HOT_24_HOURS_URL}" />
+		<property name="hotWeek" value="${HOT_WEEK_URL}" />
+		<property name="hotMonth" value="${HOT_MOTH_URL}" />
+		<property name="loginUserName" value="${LOGIN_USER_NAME}" />
+		<property name="loginUserPassword" value="${LOGIN_USER_PASSWORD}" />
+	</bean>
+	<bean id="downloadProperties" class="net.yuanmomo.backend.qsbk.bean.DownloadProperties">
+		<property name="hot8HoursPages" value="${hot8HoursPages}" />
+		<property name="hot24HoursPages" value="${hot24HoursPages}" />
+		<property name="hotWeekPages" value="${hotWeekPages}" />
+		<property name="hotMonthPages" value="${hotMonthPages}" />
+		<property name="pdfSavePath" value="${pdfSavePath}" />
+		<property name="picSaveRootPath" value="${PIC_SAVE_ROOT_PATH}" />
+	</bean>
+
+
+	<bean id="qsbkClient" class="net.yuanmomo.backend.qsbk.client.QSBKClient"
+		scope="prototype">
+		<property name="qsbkServer" ref="qsbkServer" />
+	</bean>
+</beans>
